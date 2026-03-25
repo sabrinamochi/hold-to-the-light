@@ -1,0 +1,96 @@
+/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* backgrounds */
+  --bg:           #1a1208;
+  --film-base:    #2a1c0a;
+  --film-border:  #4a3018;
+  --card-bg:      #f5ede0;
+
+  /* text */
+  --text-primary: #2c1f0e;
+  --text-muted:   rgba(200, 170, 130, 0.5);
+  --text-hint:    rgba(200, 170, 120, 0.35);
+
+  /* structural */
+  --sprocket-bg:  #1a1208;
+
+  /* categories */
+  --cat-memory:   #C4856A;
+  --cat-youth:    #7A9E8E;
+  --cat-favs:     #C9A96E;
+  --cat-stories:  #8EB4C4;
+  --cat-family:   #A88EC4;
+}
+
+/* ─── Reset / Base ──────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* ─── Film Grain Overlay ────────────────────────────────────────────────── */
+body::before {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+  opacity: 0.06;
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+/* ─── App Container ─────────────────────────────────────────────────────── */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ─── Animations ────────────────────────────────────────────────────────── */
+@keyframes scrollFilm {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes cardOpen {
+  from { transform: rotateY(90deg) scale(0.85); opacity: 0; }
+  to   { transform: rotateY(0deg)  scale(1);    opacity: 1; }
+}
+
+@keyframes toastIn {
+  from { transform: translateX(-50%) translateY(12px); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0);    opacity: 1; }
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes scrollFilm {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes cardOpen {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
