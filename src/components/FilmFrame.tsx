@@ -60,6 +60,8 @@ export function FilmFrame({ card, isSelected, onSelect }: Props) {
         src={imgSrc}
         alt=""
         aria-hidden="true"
+        loading="lazy"
+        decoding="async"
         style={{
           position: "absolute",
           inset: 0,

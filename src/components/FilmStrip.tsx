@@ -62,6 +62,9 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
   const dragStartOffsetRef = useRef(0);
   const lastTimeRef = useRef(0);
   const rafRef = useRef(0);
+  const velocityRef = useRef(0);
+  const lastPointerXRef = useRef(0);
+  const lastPointerTimeRef = useRef(0);
 
   useEffect(() => {
     isOpenRef.current = isOpen;
@@ -72,12 +75,20 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
       const elapsed = lastTimeRef.current > 0 ? (time - lastTimeRef.current) / 1000 : 0;
       lastTimeRef.current = time;
 
-      if (!isOpenRef.current && !isDraggingRef.current && elapsed < 0.1) {
-        const delta = SCROLL_SPEED * elapsed;
-        if (reversed) {
-          offsetRef.current = ((offsetRef.current - delta) % HALF_WIDTH + HALF_WIDTH) % HALF_WIDTH;
-        } else {
-          offsetRef.current = (offsetRef.current + delta) % HALF_WIDTH;
+      if (!isDraggingRef.current && elapsed < 0.1) {
+        // Apply momentum inertia
+        if (Math.abs(velocityRef.current) > 0.5) {
+          offsetRef.current = ((offsetRef.current + velocityRef.current * elapsed) % HALF_WIDTH + HALF_WIDTH) % HALF_WIDTH;
+          velocityRef.current *= 0.88;
+        } else if (!isOpenRef.current) {
+          // Auto-scroll when no card is open and momentum settled
+          velocityRef.current = 0;
+          const delta = SCROLL_SPEED * elapsed;
+          if (reversed) {
+            offsetRef.current = ((offsetRef.current - delta) % HALF_WIDTH + HALF_WIDTH) % HALF_WIDTH;
+          } else {
+            offsetRef.current = (offsetRef.current + delta) % HALF_WIDTH;
+          }
         }
       }
 
@@ -106,8 +117,18 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
       if (Math.abs(delta) <= 4) return;
       isDraggingRef.current = true;
       lastTimeRef.current = 0;
+      lastPointerXRef.current = e.clientX;
+      lastPointerTimeRef.current = performance.now();
       e.currentTarget.setPointerCapture(e.pointerId);
     }
+    const now = performance.now();
+    const dt = now - lastPointerTimeRef.current;
+    if (dt > 0) {
+      // px/s, positive = scrolling right (offset increases)
+      velocityRef.current = (lastPointerXRef.current - e.clientX) / (dt / 1000);
+    }
+    lastPointerXRef.current = e.clientX;
+    lastPointerTimeRef.current = now;
     offsetRef.current = ((dragStartOffsetRef.current + delta) % HALF_WIDTH + HALF_WIDTH) % HALF_WIDTH;
   };
 
@@ -115,6 +136,8 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
     isPointerDownRef.current = false;
     isDraggingRef.current = false;
     lastTimeRef.current = 0;
+    // Clamp launch velocity
+    velocityRef.current = Math.max(-3000, Math.min(3000, velocityRef.current));
   };
 
   return (
@@ -122,7 +145,7 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
       style={{
         position: 'relative',
         width: '100%',
-        height: `min(${STRIP_H}px, calc((100dvh - 180px) / 2))`,
+        height: `${STRIP_H}px`,
         overflow: 'hidden',
         background: 'var(--film-base)',
         borderTop: '2px solid var(--film-border)',

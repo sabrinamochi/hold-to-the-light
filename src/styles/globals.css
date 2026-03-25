@@ -30,7 +30,7 @@
 }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
 }
 
@@ -58,11 +58,9 @@ body::before {
 
 /* ─── App Container ─────────────────────────────────────────────────────── */
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   position: relative;
 }
 
@@ -80,6 +78,32 @@ body::before {
 @keyframes toastIn {
   from { transform: translateX(-50%) translateY(12px); opacity: 0; }
   to   { transform: translateX(-50%) translateY(0);    opacity: 1; }
+}
+
+/* ─── App Header ────────────────────────────────────────────────────────── */
+.app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 40px clamp(24px, 4vw, 64px);
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .app-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    text-align: left;
+    padding: 0 clamp(24px, 4vw, 64px) 48px;
+  }
+
+  .app-header p {
+    justify-self: end;
+    text-align: right;
+  }
 }
 
 /* ─── Reduced Motion ────────────────────────────────────────────────────── */
