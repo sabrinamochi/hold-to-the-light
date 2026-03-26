@@ -10,11 +10,15 @@ export function AboutModal({ onClose, type = "project" }: Props) {
 
   useEffect(() => {
     requestAnimationFrame(() => setVisible(true));
+    document.body.style.overflow = "hidden";
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleKey);
+    };
   }, [onClose]);
 
   return (
@@ -29,7 +33,7 @@ export function AboutModal({ onClose, type = "project" }: Props) {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
-        background: "transparent",
+        background: "rgba(28, 18, 8, 0.96)",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.25s ease",
       }}
