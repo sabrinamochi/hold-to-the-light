@@ -29,10 +29,7 @@ export function AboutModal({ onClose, type = "project" }: Props) {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
-        overflowY: "auto",
-        background: "rgba(8,5,2,0.75)",
-        backdropFilter: "blur(32px)",
-        WebkitBackdropFilter: "blur(32px)",
+        background: "transparent",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.25s ease",
       }}
@@ -41,14 +38,14 @@ export function AboutModal({ onClose, type = "project" }: Props) {
         style={{
           position: "relative",
           width: "min(560px, 100vw)",
-          background: "rgba(28, 18, 8, 0.8)",
+          height: "100dvh",
+          overflowY: "auto",
+          background: "rgba(28, 18, 8, 0.96)",
           backdropFilter: "blur(60px)",
           WebkitBackdropFilter: "blur(60px)",
-          borderRadius: "0 0 28px 28px",
-          border: "1px solid rgba(255,255,255,0.09)",
-          borderTop: "none",
-          boxShadow: "0 20px 80px rgba(0,0,0,0.5)",
-          padding: "28px 36px 52px",
+          borderRadius: 0,
+          border: "none",
+          padding: "clamp(24px, 6dvh, 48px) clamp(20px, 6vw, 36px) 52px",
         }}
       >
         {/* Grain */}

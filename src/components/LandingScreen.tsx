@@ -227,7 +227,7 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
             borderRadius: "100px",
             padding: "clamp(12px, 2vw, 16px) clamp(36px, 6vw, 52px)",
             fontFamily: "'Nunito Sans', sans-serif",
-            fontSize: "clamp(14px, 1.4vw, 16px)",
+            fontSize: "clamp(13px, 1.4vw, 16px)",
             fontWeight: 600,
             letterSpacing: "0.12em",
             textTransform: "uppercase",
@@ -252,7 +252,7 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
         >
           {imagesReady ? (
             <>
-              Explore <span style={{ opacity: 0.6, fontSize: "16px" }}>→</span>
+              Explore <span style={{ opacity: 0.6, fontSize: "13px" }}>→</span>
             </>
           ) : (
             <>

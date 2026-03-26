@@ -16,6 +16,8 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
   const [open, setOpen] = useState(false);
   const [topic, setTopic] = useState("");
   const [category, setCategory] = useState<Category>("favourite things");
+  const [dragY, setDragY] = useState(0);
+  const touchStartY = useRef(0);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -27,6 +29,7 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
     } else {
       setTopic("");
       setStatus("idle");
+      setDragY(0);
     }
   }, [open]);
 
@@ -76,7 +79,7 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
           borderRadius: "100px",
           padding: "12px 28px",
           fontFamily: "'Nunito Sans', sans-serif",
-          fontSize: "13px",
+          fontSize: "clamp(13px, 1.4vw, 16px)",
           fontWeight: 600,
           letterSpacing: "0.14em",
           textTransform: "uppercase",
@@ -133,10 +136,22 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
               display: "flex",
               flexDirection: "column",
               gap: "0",
-              // Subtle grain via pseudo handled by globals; add an inset grain via box-shadow
               overflow: "hidden",
+              transform: `translateY(${dragY}px)`,
+              transition: dragY > 0 ? "none" : "transform 0.3s ease",
             }}
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => {
+              touchStartY.current = e.touches[0].clientY;
+            }}
+            onTouchMove={(e) => {
+              const delta = e.touches[0].clientY - touchStartY.current;
+              if (delta > 0) setDragY(delta);
+            }}
+            onTouchEnd={() => {
+              if (dragY > 80) setOpen(false);
+              setDragY(0);
+            }}
           >
             {/* Grain overlay */}
             <div
