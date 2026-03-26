@@ -234,7 +234,7 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
         {/* Footer */}
         <div
           style={{
-            padding: '16px 24px 0',
+            padding: '16px 24px',
             borderTop: '1px solid rgba(255,255,255,0.08)',
             display: 'flex',
             justifyContent: 'space-between',
