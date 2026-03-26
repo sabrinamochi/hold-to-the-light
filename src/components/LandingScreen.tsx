@@ -1,6 +1,6 @@
 import { CARDS, FRAME_FILLS } from "../data/cards";
 
-const FRAME_W = 160;
+const FRAME_W = 200;
 const SPROCKET_H = 22;
 
 function SprocketRow() {
@@ -69,7 +69,7 @@ function HorizontalStrip({
         }}
       >
         <SprocketRow />
-        <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
+        <div style={{ display: "flex", flexDirection: "row", flex: 1,   gap: '10px' }}>
           {frames.map((card, i) => (
             <div
               key={`${card.id}-${i}`}
@@ -130,6 +130,7 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
           justifyContent: "space-between",
           pointerEvents: "none",
           opacity: 0.3,
+        
         }}
       >
         {/* <HorizontalStrip duration={300} delay={0} /> */}

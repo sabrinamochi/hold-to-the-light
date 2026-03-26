@@ -208,7 +208,7 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false, 
       >
         <SprocketRow count={holeCount} />
 
-        <div style={{ display: 'flex', flexDirection: 'row', flex: 1, gap: "0" }}>
+        <div style={{ display: 'flex', flexDirection: 'row', flex: 1, gap: "10px" }}>
           {frames.map((card, i) => (
             <FilmFrame
               key={`${card.id}-${i}`}
