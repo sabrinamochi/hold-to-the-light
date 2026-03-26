@@ -1,9 +1,7 @@
 import { CARDS, FRAME_FILLS } from "../data/cards";
 
-const FRAME_H = 160;
-const FRAME_W = 120;
+const FRAME_W = 160;
 const SPROCKET_H = 22;
-const STRIP_H = FRAME_H + SPROCKET_H * 2;
 
 function SprocketRow() {
   const count = 60;
@@ -51,7 +49,7 @@ function HorizontalStrip({
     <div
       style={{
         width: "100%",
-        height: `${STRIP_H}px`,
+        height: "40vh",
         overflow: "hidden",
         background: "var(--film-base)",
         borderTop: "2px solid var(--film-border)",
@@ -134,7 +132,7 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
           opacity: 0.3,
         }}
       >
-        <HorizontalStrip duration={300} delay={0} />
+        {/* <HorizontalStrip duration={300} delay={0} /> */}
         <HorizontalStrip duration={300} delay={-12} reversed />
       </div>
 
@@ -147,8 +145,8 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
           background: `
             linear-gradient(to bottom,
               var(--bg) 0%,
-              transparent ${STRIP_H + 20}px,
-              transparent calc(100% - ${STRIP_H + 20}px),
+              transparent 32vh,
+              transparent calc(100% - 32vh),
               var(--bg) 100%
             )
           `,
@@ -188,7 +186,7 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
           style={{
             width: "56px",
             height: "1px",
-            background: "rgba(200,170,130,0.25)",
+            // background: "rgba(200,170,130,0.25)",
             margin: "28px 0",
           }}
         />
@@ -223,7 +221,7 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
             color: imagesReady
               ? "rgba(245,233,218,0.92)"
               : "rgba(245,233,218,0.4)",
-            border: "1px solid rgba(201,169,110,0.2)",
+            border: "none",
             borderRadius: "100px",
             padding: "clamp(12px, 2vw, 16px) clamp(36px, 6vw, 52px)",
             fontFamily: "'Nunito Sans', sans-serif",
@@ -233,8 +231,8 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
             textTransform: "uppercase",
             cursor: imagesReady ? "pointer" : "default",
             boxShadow: imagesReady
-              ? "0 0 0 1px rgba(201,169,110,0.12), 0 -10px 30px -4px rgba(201,169,110,0.45), 0 10px 28px -4px rgba(220,200,170,0.1), 0 0 60px rgba(196,133,106,0.15), inset 0 1px 0 rgba(255,255,255,0.07)"
-              : "0 0 0 1px rgba(255,255,255,0.06)",
+              ? "0px 0px 0px 1px rgba(201,169,110,0.16), 0 -8px 20px -4px rgba(201,169,110,0.28), 0 8px 18px -4px rgba(220,200,170,0.06), 0 0 40px rgba(196,133,106,0.09), inset 0 1px 0 rgba(255,255,255,0.06)"
+              : "0px 0px 0px 1px rgba(255,255,255,0.06)",
             transition: "box-shadow 0.3s ease, color 0.3s ease",
             display: "flex",
             alignItems: "center",
@@ -243,11 +241,11 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
           onMouseEnter={(e) => {
             if (!imagesReady) return;
             e.currentTarget.style.boxShadow =
-              "0 0 0 1px rgba(201,169,110,0.2), 0 -14px 40px -2px rgba(201,169,110,0.65), 0 12px 36px -2px rgba(220,200,170,0.18), 0 0 80px rgba(196,133,106,0.28), inset 0 1px 0 rgba(255,255,255,0.1)";
+              "0px 0px 0px 1px rgba(201,169,110,0.24), 0 -10px 26px -2px rgba(201,169,110,0.4), 0 10px 22px -2px rgba(220,200,170,0.1), 0 0 55px rgba(196,133,106,0.14), inset 0 1px 0 rgba(255,255,255,0.08)";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow =
-              "0 0 0 1px rgba(201,169,110,0.12), 0 -10px 30px -4px rgba(201,169,110,0.45), 0 10px 28px -4px rgba(220,200,170,0.1), 0 0 60px rgba(196,133,106,0.15), inset 0 1px 0 rgba(255,255,255,0.07)";
+              "0px 0px 0px 1px rgba(201,169,110,0.16), 0 -8px 20px -4px rgba(201,169,110,0.28), 0 8px 18px -4px rgba(220,200,170,0.06), 0 0 40px rgba(196,133,106,0.09), inset 0 1px 0 rgba(255,255,255,0.06)";
           }}
         >
           {imagesReady ? (

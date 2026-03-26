@@ -18,10 +18,14 @@ export default function App() {
   const [currentImgSrc, setCurrentImgSrc] = useState<string | null>(null);
   const [phase, setPhase] = useState<"landing" | "leaving" | "film">("landing");
   const [showAbout, setShowAbout] = useState(false);
-  const [showHint, setShowHint] = useState(true);
+  const [aboutType, setAboutType] = useState<"project" | "me">("project");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (FILM_IMAGE_URLS.length === 0) { setImagesReady(true); return; }
+    if (FILM_IMAGE_URLS.length === 0) {
+      setImagesReady(true);
+      return;
+    }
     let loaded = 0;
     const total = FILM_IMAGE_URLS.length;
     const timeout = setTimeout(() => setImagesReady(true), 4000);
@@ -29,7 +33,10 @@ export default function App() {
       const img = new Image();
       img.onload = img.onerror = () => {
         loaded++;
-        if (loaded >= total) { clearTimeout(timeout); setImagesReady(true); }
+        if (loaded >= total) {
+          clearTimeout(timeout);
+          setImagesReady(true);
+        }
       };
       img.src = src;
     });
@@ -50,9 +57,9 @@ export default function App() {
       setUserCards(
         data.map((row) => ({
           id: 1000 + Number(row.id),
-          category: ((row.category ?? "favourite things") as Category),
+          category: (row.category ?? "favourite things") as Category,
           question: row.topic,
-        }))
+        })),
       );
     }
   }, []);
@@ -63,17 +70,6 @@ export default function App() {
 
   useEffect(() => {
     setCurrentImgSrc(current ? getCardImage(current.id) : null);
-  }, [current]);
-
-  // Hide hint after 4s, or immediately when a card is opened
-  useEffect(() => {
-    if (phase !== "film") return;
-    const t = setTimeout(() => setShowHint(false), 6000);
-    return () => clearTimeout(t);
-  }, [phase]);
-
-  useEffect(() => {
-    if (current) setShowHint(false);
   }, [current]);
 
   const handleEnter = () => {
@@ -99,9 +95,10 @@ export default function App() {
       {(phase === "landing" || phase === "leaving") && (
         <div
           style={{
-            animation: phase === "leaving"
-              ? "fadeOut 0.5s ease forwards"
-              : "fadeIn 0.6s ease forwards",
+            animation:
+              phase === "leaving"
+                ? "fadeOut 0.5s ease forwards"
+                : "fadeIn 0.6s ease forwards",
             pointerEvents: phase === "leaving" ? "none" : "auto",
           }}
         >
@@ -128,27 +125,25 @@ export default function App() {
           <div
             aria-hidden="true"
             style={{
-              textAlign: "center",
-              opacity: showHint ? 1 : 0,
-              transition: "opacity 1s ease",
+              textAlign: "left",
               pointerEvents: "none",
               position: "absolute",
-              top: "clamp(18px, 4.5dvh, 34px)",
-              left: 0,
+              top: "clamp(24px, 5dvh, 36px)",
+              left: 'clamp(18px, 4dvw, 28px)',
               right: 0,
             }}
           >
             <span
               style={{
                 fontFamily: "'EB Garamond', serif",
-                fontSize: "16px",
+                fontSize: "18px",
                 fontWeight: 400,
-                // letterSpacing: "0.22em",
                 fontStyle: "italic",
                 color: "rgb(255, 255, 255, 0.75)",
+                lineHeight: "32px",
               }}
             >
-              Tap any frame to begin
+              Tap a frame
             </span>
           </div>
 
@@ -180,53 +175,137 @@ export default function App() {
         />
       )}
 
-      {/* About mark — bottom left */}
-      {phase === "film" && (
-        <button
-          onClick={() => setShowAbout(true)}
-          aria-label="About this project"
+      {/* Full-screen menu backdrop */}
+      {phase === "film" && menuOpen && (
+        <div
+          aria-hidden="true"
+          onClick={() => setMenuOpen(false)}
           style={{
             position: "fixed",
-            bottom: "max(30px, calc(env(safe-area-inset-bottom) + 16px))",
-            left: "max(4dvh, 24px)",
-            zIndex: 40,
-            background: "none",
-            border: "none",
-            padding: "8px",
-            cursor: "pointer",
+            inset: 0,
+            zIndex: 94,
+            background: "rgba(8, 5, 2, 0.97)",
+            animation: "fadeIn 0.22s ease forwards",
+          }}
+        />
+      )}
+
+      {/* Plus/minus menu — top right */}
+      {phase === "film" && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            right: 0,
+            zIndex: 95,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            gap: "2px",
-            transition: "opacity 0.2s ease",
-            opacity: 0.75,
+            alignItems: "flex-end",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.45")}
         >
-          <span style={{
-            fontSize: "18px",
-            color: "rgb(255, 166, 2)",
-            lineHeight: 1,
-            display: "block",
-            textShadow: "0 0 12px rgba(201,169,110,0.6)",
-          }}>✦</span>
-          <span style={{
-            fontFamily: "'Nunito Sans', sans-serif",
-            fontSize: "14px",
-            fontWeight: 600,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: "rgb(255, 166, 2)",
-            display: "block",
-          }}>about</span>
-        </button>
+          {/* Toggle button */}
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            style={{
+              background: "none",
+              border: "none",
+              padding: "0 4px",
+              cursor: "pointer",
+              fontFamily: "'DM Mono', monospace",
+              fontSize: "32px",
+              fontWeight: 300,
+              color: "rgba(245,233,218,0.55)",
+              lineHeight: 1,
+              transition: "color 0.2s ease, transform 0.3s ease",
+              transform: menuOpen ? "rotate(45deg)" : "rotate(0deg)",
+              margin: "clamp(24px, 5dvh, 36px) clamp(18px, 4dvw, 28px)",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.color = "rgba(245,233,218,0.9)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.color = "rgba(245,233,218,0.55)")
+            }
+          >
+            +
+          </button>
+
+          {/* Menu items */}
+          {menuOpen && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "stretch",
+                gap: "4px",
+                paddingRight: "clamp(18px, 4dvw, 28px)",
+                animation: "menuIn 0.2s ease forwards",
+              }}
+            >
+              {[
+                {
+                  label: "About the project",
+                  delay: "0s",
+                  onClick: () => {
+                    setAboutType("project");
+                    setShowAbout(true);
+                    setMenuOpen(false);
+                  },
+                },
+                {
+                  label: "About me",
+                  delay: "0.06s",
+                  onClick: () => {
+                    window.open("https://sabrinamochi.github.io/", "_blank", "noopener,noreferrer");
+                    setMenuOpen(false);
+                  },
+                },
+              ].map((item) => (
+                <button
+                  key={item.label}
+                  onClick={item.onClick}
+                  style={{
+                    background: "rgba(22, 14, 6, 0)",
+                    border: "0px solid rgba(201,169,110,0)",
+            
+                    padding: "11px 18px",
+                    cursor: "pointer",
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(245,233,218,0.85)",
+                    textAlign: "right",
+                    transition: "color 0.2s ease, background 0.2s ease",
+                    animation: `menuItemIn 0.2s ease ${item.delay} forwards`,
+                    opacity: 0,
+                    whiteSpace: "nowrap",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "rgba(245,233,218,0.1)";
+                    e.currentTarget.style.background = "rgba(35, 22, 8, 0.95)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "rgba(245,233,218,0.85)";
+                    e.currentTarget.style.background = "rgba(22, 14, 6, 0.85)";
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       )}
 
       {phase === "film" && <SuggestTopic onTopicSubmit={handleTopicSubmit} />}
 
       {/* About modal */}
-      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
+      {showAbout && (
+        <AboutModal type={aboutType} onClose={() => setShowAbout(false)} />
+      )}
     </>
   );
 }

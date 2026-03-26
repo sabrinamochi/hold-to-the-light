@@ -267,18 +267,18 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
               textTransform: 'uppercase',
               color: 'rgba(245,233,218,0.88)',
               background: 'rgba(61, 61, 61, 0.23)',
-              border: '1px solid rgba(201,169,110,0.2)',
+              border: 'none',
               borderRadius: '100px',
               cursor: 'pointer',
               padding: '9px 20px',
-              boxShadow: '0 0 0 1px rgba(201,169,110,0.08), 0 -6px 18px -4px rgba(201,169,110,0.38), 0 6px 14px -4px rgba(220,200,170,0.07), 0 0 36px rgba(196,133,106,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
+              boxShadow: '0px 0px 0px 1px rgba(201,169,110,0.1), 0px 1px 2px -1px rgba(0,0,0,0.2), 0px 2px 4px 0px rgba(0,0,0,0.12)',
               transition: 'box-shadow 0.3s ease',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.boxShadow = '0 0 0 1px rgba(201,169,110,0.18), 0 -10px 26px -2px rgba(201,169,110,0.55), 0 8px 22px -2px rgba(220,200,170,0.12), 0 0 56px rgba(196,133,106,0.22), inset 0 1px 0 rgba(255,255,255,0.09)';
+              e.currentTarget.style.boxShadow = '0px 0px 0px 1px rgba(201,169,110,0.18), 0px 1px 2px -1px rgba(0,0,0,0.25), 0px 2px 4px 0px rgba(0,0,0,0.15)';
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.boxShadow = '0 0 0 1px rgba(201,169,110,0.08), 0 -6px 18px -4px rgba(201,169,110,0.38), 0 6px 14px -4px rgba(220,200,170,0.07), 0 0 36px rgba(196,133,106,0.12), inset 0 1px 0 rgba(255,255,255,0.06)';
+              e.currentTarget.style.boxShadow = '0px 0px 0px 1px rgba(201,169,110,0.1), 0px 1px 2px -1px rgba(0,0,0,0.2), 0px 2px 4px 0px rgba(0,0,0,0.12)';
             }}
           >
             next →

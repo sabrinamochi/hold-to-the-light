@@ -67,29 +67,31 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
         style={{
           position: "fixed",
           bottom: "max(28px, calc(env(safe-area-inset-bottom) + 16px))",
-          right: "max(4dvh, 24px)",
+          left: "50%",
+          transform: "translateX(-50%)",
           zIndex: 90,
-          background: "rgba(18, 11, 5, 0.92)",
+          background: "rgba(18, 11, 5, 0.2)",
           color: "rgba(245,233,218,0.9)",
-          border: "1px solid rgba(201,169,110,0.18)",
+          border: "none",
           borderRadius: "100px",
           padding: "12px 28px",
           fontFamily: "'Nunito Sans', sans-serif",
           fontSize: "13px",
           fontWeight: 600,
-          letterSpacing: "0.1em",
+          letterSpacing: "0.14em",
           textTransform: "uppercase",
           cursor: "pointer",
-          boxShadow: "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.38), 0 8px 20px -4px rgba(220,200,170,0.08), 0 0 48px rgba(196,133,106,0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
+          whiteSpace: "nowrap",
+          boxShadow: "0px 0px 0px 1px rgba(201,169,110,0.14), 0 -5px 14px -4px rgba(201,169,110,0.2), 0 5px 12px -4px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05)",
           transition: "box-shadow 0.3s ease",
           display: "flex",
           alignItems: "center",
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = "0 0 0 1px rgba(201,169,110,0.22), 0 -12px 32px -2px rgba(201,169,110,0.55), 0 10px 28px -2px rgba(220,200,170,0.14), 0 0 70px rgba(196,133,106,0.22), inset 0 1px 0 rgba(255,255,255,0.09)";
+          e.currentTarget.style.boxShadow = "0px 0px 0px 1px rgba(201,169,110,0.22), 0 -8px 20px -2px rgba(201,169,110,0.3), 0 8px 16px -2px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.07)";
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.38), 0 8px 20px -4px rgba(220,200,170,0.08), 0 0 48px rgba(196,133,106,0.12), inset 0 1px 0 rgba(255,255,255,0.06)";
+          e.currentTarget.style.boxShadow = "0px 0px 0px 1px rgba(201,169,110,0.14), 0 -5px 14px -4px rgba(201,169,110,0.2), 0 5px 12px -4px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05)";
         }}
       >
         Suggest a topic
@@ -200,7 +202,7 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
                     marginTop: "32px",
                     width: "100%",
                     background: "rgba(14, 9, 4, 0.95)",
-                    border: "1px solid rgba(201,169,110,0.22)",
+                    border: "none",
                     borderRadius: "100px",
                     padding: "16px",
                     fontFamily: "'Nunito Sans', sans-serif",
@@ -210,14 +212,14 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
                     textTransform: "uppercase",
                     color: "rgba(245,233,218,0.88)",
                     cursor: "pointer",
-                    boxShadow: "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.42), 0 8px 20px -4px rgba(220,200,170,0.08), 0 0 50px rgba(196,133,106,0.14), inset 0 1px 0 rgba(255,255,255,0.06)",
+                    boxShadow: "0px 0px 0px 1px rgba(201,169,110,0.16), 0 -6px 16px -4px rgba(201,169,110,0.22), 0 6px 14px -4px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.06)",
                     transition: "box-shadow 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = "0 0 0 1px rgba(201,169,110,0.2), 0 -12px 32px -2px rgba(201,169,110,0.6), 0 10px 28px -2px rgba(220,200,170,0.14), 0 0 70px rgba(196,133,106,0.24), inset 0 1px 0 rgba(255,255,255,0.09)";
+                    e.currentTarget.style.boxShadow = "0px 0px 0px 1px rgba(201,169,110,0.24), 0 -8px 22px -2px rgba(201,169,110,0.32), 0 8px 18px -2px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.42), 0 8px 20px -4px rgba(220,200,170,0.08), 0 0 50px rgba(196,133,106,0.14), inset 0 1px 0 rgba(255,255,255,0.06)";
+                    e.currentTarget.style.boxShadow = "0px 0px 0px 1px rgba(201,169,110,0.16), 0 -6px 16px -4px rgba(201,169,110,0.22), 0 6px 14px -4px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.06)";
                   }}
                 >
                   Close
@@ -321,16 +323,16 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
                       cursor: topic.trim() ? "pointer" : "default",
                       transition: "box-shadow 0.3s ease, border-color 0.3s ease, color 0.3s ease",
                       boxShadow: topic.trim()
-                        ? "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.5), 0 8px 20px -4px rgba(220,200,170,0.1), 0 0 50px rgba(196,133,106,0.18), inset 0 1px 0 rgba(255,255,255,0.07)"
+                        ? "0px 0px 0px 1px rgba(201,169,110,0.16), 0 -6px 16px -4px rgba(201,169,110,0.22), 0 6px 14px -4px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.06)"
                         : "none",
                     }}
                     onMouseEnter={(e) => {
                       if (!topic.trim()) return;
-                      e.currentTarget.style.boxShadow = "0 0 0 1px rgba(201,169,110,0.2), 0 -12px 32px -2px rgba(201,169,110,0.65), 0 10px 28px -2px rgba(220,200,170,0.16), 0 0 70px rgba(196,133,106,0.28), inset 0 1px 0 rgba(255,255,255,0.1)";
+                      e.currentTarget.style.boxShadow = "0px 0px 0px 1px rgba(201,169,110,0.24), 0 -8px 22px -2px rgba(201,169,110,0.32), 0 8px 18px -2px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08)";
                     }}
                     onMouseLeave={(e) => {
                       if (!topic.trim()) return;
-                      e.currentTarget.style.boxShadow = "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.5), 0 8px 20px -4px rgba(220,200,170,0.1), 0 0 50px rgba(196,133,106,0.18), inset 0 1px 0 rgba(255,255,255,0.07)";
+                      e.currentTarget.style.boxShadow = "0px 0px 0px 1px rgba(201,169,110,0.16), 0 -6px 16px -4px rgba(201,169,110,0.22), 0 6px 14px -4px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.06)";
                     }}
                   >
                     {status === "loading" ? "Sending…" : "Submit"}

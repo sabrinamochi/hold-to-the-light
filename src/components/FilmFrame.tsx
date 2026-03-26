@@ -8,7 +8,7 @@ export const FRAME_W = 220;
 const CARD_IMAGE_MAP: Record<number, string> = {};
 
 for (const fsPath of Object.keys(
-  import.meta.glob("/public/img/film/*.{jpg,jpeg,png}"),
+  import.meta.glob("/public/img/film/*.webp"),
 )) {
   const filename = fsPath.split("/").pop() ?? "";
   const publicUrl = `${import.meta.env.BASE_URL}img/film/${filename}`;

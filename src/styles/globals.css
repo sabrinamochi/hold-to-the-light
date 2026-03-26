@@ -104,6 +104,16 @@ body::before {
   to { transform: rotate(360deg); }
 }
 
+@keyframes menuIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes menuItemIn {
+  from { opacity: 0; transform: translateX(6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 /* ─── App Header ────────────────────────────────────────────────────────── */
 .app-header {
   display: flex;
