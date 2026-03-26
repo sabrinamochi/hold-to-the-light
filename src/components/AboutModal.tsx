@@ -52,7 +52,7 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
           overflowY: "auto",
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           WebkitOverflowScrolling: "touch" as any,
-          marginTop: '5%'
+          
         }}
       >
         {/* Grain */}
@@ -134,6 +134,7 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
             boxShadow:
               "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.42), 0 8px 20px -4px rgba(220,200,170,0.08), 0 0 50px rgba(196,133,106,0.14), inset 0 1px 0 rgba(255,255,255,0.06)",
             transition: "box-shadow 0.3s ease",
+            marginBottom: '10px'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow =
