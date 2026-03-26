@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Card } from '../data/cards';
+import { FRAME_FILLS } from '../data/cards';
 import { CategoryPill } from './CategoryPill';
 
 interface Props {
@@ -128,9 +129,10 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
     transition: flipping ? 'transform 0.25s ease-in' : undefined,
   };
 
+  const gradientBg = FRAME_FILLS[(displayCard.id - 1) % FRAME_FILLS.length];
   const backdropBg = imgSrc
     ? `url(${imgSrc}) center/cover no-repeat`
-    : 'rgba(10,6,2,0.82)';
+    : gradientBg;
 
   return (
     <div
@@ -146,9 +148,11 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        overflowY: 'auto',
+        padding: 'max(5dvh, 24px) 16px max(4dvh, 24px)',
         background: backdropBg,
-        backdropFilter: imgSrc ? undefined : 'blur(4px)',
-        WebkitBackdropFilter: imgSrc ? undefined : 'blur(4px)',
+        backdropFilter: undefined,
+        WebkitBackdropFilter: undefined,
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.5s ease',
       }}
@@ -203,7 +207,7 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
         <div
           style={{
             flex: 1,
-            padding: '16px 24px 0',
+            padding: '16px 24px',
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
@@ -215,12 +219,14 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
 
           <p
             style={{
-              fontFamily: "'Lora', serif",
-              fontStyle: '',
-              fontSize: '18px',
-              lineHeight: 1.4,
+              fontFamily: "'EB Garamond', serif",
+              fontStyle: 'italic',
+              fontWeight: 400,
+              fontSize: 'clamp(20px, 2.8vw, 26px)',
+              lineHeight: 1.5,
               color: 'rgba(240,232,220,0.92)',
               flex: 1,
+              paddingBottom: '20px'
             }}
           >
             {displayCard.question}
@@ -230,7 +236,7 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
         {/* Footer */}
         <div
           style={{
-            padding: '16px 24px',
+            padding: '16px 24px 0',
             borderTop: '1px solid rgba(255,255,255,0.08)',
             display: 'flex',
             justifyContent: 'space-between',
@@ -241,7 +247,7 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
         >
           <span
             style={{
-              fontFamily: "'DM Mono', monospace",
+              fontFamily: "'Nunito Sans', sans-serif",
               fontSize: '14px',
               fontWeight: 300,
               color: 'rgba(240,232,220,0.35)',
@@ -254,19 +260,26 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
             ref={closeButtonRef}
             onClick={handleNext}
             style={{
-              fontFamily: "'DM Mono', monospace",
-              fontSize: '14px',
-              fontWeight: 400,
-              color: 'rgba(240,232,220,0.95)',
-              background: 'none',
-              border: 'none',
+              fontFamily: "'Nunito Sans', sans-serif",
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: 'rgba(245,233,218,0.88)',
+              background: 'rgba(61, 61, 61, 0.23)',
+              border: '1px solid rgba(201,169,110,0.2)',
+              borderRadius: '100px',
               cursor: 'pointer',
-              letterSpacing: '0.06em',
-              opacity: 0.65,
-              padding: '4px 0',
+              padding: '9px 20px',
+              boxShadow: '0 0 0 1px rgba(201,169,110,0.08), 0 -6px 18px -4px rgba(201,169,110,0.38), 0 6px 14px -4px rgba(220,200,170,0.07), 0 0 36px rgba(196,133,106,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
+              transition: 'box-shadow 0.3s ease',
             }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '0.65')}
+            onMouseEnter={e => {
+              e.currentTarget.style.boxShadow = '0 0 0 1px rgba(201,169,110,0.18), 0 -10px 26px -2px rgba(201,169,110,0.55), 0 8px 22px -2px rgba(220,200,170,0.12), 0 0 56px rgba(196,133,106,0.22), inset 0 1px 0 rgba(255,255,255,0.09)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.boxShadow = '0 0 0 1px rgba(201,169,110,0.08), 0 -6px 18px -4px rgba(201,169,110,0.38), 0 6px 14px -4px rgba(220,200,170,0.07), 0 0 36px rgba(196,133,106,0.12), inset 0 1px 0 rgba(255,255,255,0.06)';
+            }}
           >
             next →
           </button>

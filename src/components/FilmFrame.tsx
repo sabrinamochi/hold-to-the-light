@@ -1,13 +1,11 @@
 import type { Card } from "../data/cards";
+import { FRAME_FILLS } from "../data/cards";
 
 export const FRAME_HEIGHT = 170;
 export const FRAME_W = 220;
 
 // Auto-discover all images in public/img/film/ at build time.
-// Files with a numeric stem (e.g. "3.png") map to that card id.
-// Everything else goes into the fallback pool.
 const CARD_IMAGE_MAP: Record<number, string> = {};
-const FALLBACK_IMAGES: string[] = [];
 
 for (const fsPath of Object.keys(
   import.meta.glob("/public/img/film/*.{jpg,jpeg,png}"),
@@ -17,14 +15,17 @@ for (const fsPath of Object.keys(
   const num = parseInt(filename.replace(/\.[^.]+$/, ""), 10);
   if (!isNaN(num)) {
     CARD_IMAGE_MAP[num] = publicUrl;
-  } else {
-    FALLBACK_IMAGES.push(publicUrl);
   }
 }
 
+// All image URLs — used for preloading
+export const FILM_IMAGE_URLS: string[] = Object.values(CARD_IMAGE_MAP);
+
 
 export function getCardImage(cardId: number): string {
-  return CARD_IMAGE_MAP[cardId] ?? FALLBACK_IMAGES[(cardId - 1) % FALLBACK_IMAGES.length];
+  if (cardId >= 1000) return ''; // user-submitted cards use gradient, no image
+  const keys = Object.keys(CARD_IMAGE_MAP).map(Number);
+  return CARD_IMAGE_MAP[cardId] ?? CARD_IMAGE_MAP[keys[(cardId - 1) % keys.length]] ?? '';
 }
 interface Props {
   card: Card;
@@ -34,13 +35,16 @@ interface Props {
 }
 
 export function FilmFrame({ card, isSelected, onSelect }: Props) {
-  const imgSrc =
-    CARD_IMAGE_MAP[card.id] ??
-    FALLBACK_IMAGES[(card.id - 1) % FALLBACK_IMAGES.length];
+  const isUserCard = card.id >= 1000;
+  const keys = Object.keys(CARD_IMAGE_MAP).map(Number);
+  const imgSrc = isUserCard
+    ? undefined
+    : CARD_IMAGE_MAP[card.id] ?? CARD_IMAGE_MAP[keys[(card.id - 1) % keys.length]];
+
   return (
     <button
       aria-label={`Open memory card: ${card.category}`}
-      onClick={() => onSelect(card, imgSrc)}
+      onClick={() => onSelect(card, imgSrc ?? '')}
       style={{
         position: "relative",
         width: `${FRAME_W}px`,
@@ -51,33 +55,35 @@ export function FilmFrame({ card, isSelected, onSelect }: Props) {
         padding: 0,
         overflow: "hidden",
         flexShrink: 0,
-        background: "#1a1208",
+        background: FRAME_FILLS[(card.id - 1) % FRAME_FILLS.length],
         display: "block",
       }}
     >
-      {/* Actual film photo */}
-      <img
-        src={imgSrc}
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          objectPosition: "center",
-          filter: isSelected
-            ? "blur(0px) saturate(1)"
-            : "blur(10px) saturate(0.7)",
-          transform: isSelected ? "scale(1)" : "scale(1.08)",
-          transition: "filter 0.55s ease, transform 0.55s ease",
-          pointerEvents: "none",
-          userSelect: "none",
-        }}
-      />
+      {/* Film photo — only for built-in cards */}
+      {!isUserCard && imgSrc && (
+        <img
+          src={imgSrc}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            filter: isSelected
+              ? "blur(0px) saturate(1)"
+              : "blur(10px) saturate(0.7)",
+            transform: isSelected ? "scale(1)" : "scale(1.08)",
+            transition: "filter 0.55s ease, transform 0.55s ease",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        />
+      )}
 
       {/* Vignette overlay */}
       <span
@@ -95,15 +101,15 @@ export function FilmFrame({ card, isSelected, onSelect }: Props) {
         style={{
           position: "absolute",
           bottom: "6px",
-          right: "7px",
-          fontFamily: "'DM Mono', monospace",
+          right: "10px",
+          fontFamily: "'Nunito Sans', sans-serif",
           fontSize: "12px",
           fontWeight: 300,
           color: "rgba(232, 232, 232, 0.72)",
           letterSpacing: "0.05em",
           pointerEvents: "none",
           whiteSpace: "nowrap",
-          textTransform: "uppercase",
+          // textTransform: "uppercase",
         }}
       >
         {card.category}

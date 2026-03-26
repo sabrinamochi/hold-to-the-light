@@ -38,7 +38,7 @@ export const CARDS: Card[] = [
 ];
 
 export const CATEGORY_COLORS: Record<Category, { solid: string; tint: string }> = {
-  'shared memories':   { solid: '#d28d6fff', tint: 'rgba(196,133,106,0.25)' },
+  'shared memories':   { solid: '#faaa88ff', tint: 'rgba(196,133,106,0.25)' },
   'their younger years': { solid: '#84b39eff', tint: 'rgba(122,158,142,0.25)' },
   'favourite things':  { solid: '#ddba78ff', tint: 'rgba(201,169,110,0.25)' },
 };

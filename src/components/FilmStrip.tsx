@@ -9,16 +9,16 @@ interface Props {
   onSelect: (card: Card, imgSrc: string) => void;
   /** Scroll in the opposite direction */
   reversed?: boolean;
+  /** Additional user-submitted cards to append to the strip */
+  extraCards?: Card[];
 }
 
 const SPROCKET_H = 30;
 const STRIP_H = FRAME_HEIGHT + SPROCKET_H * 2; // 170 + 32 = 202px
 
-export const HALF_WIDTH = CARDS.length * FRAME_W; // loop wrap point
-const SCROLL_SPEED = HALF_WIDTH / 350; // px/s
-const HOLE_COUNT = Math.ceil((HALF_WIDTH * 2) / 24) + 10;
+export const HALF_WIDTH = CARDS.length * FRAME_W; // loop wrap point (used externally)
 
-function SprocketRow() {
+function SprocketRow({ count }: { count: number }) {
   return (
     <div
       style={{
@@ -32,7 +32,7 @@ function SprocketRow() {
         flexShrink: 0,
       }}
     >
-      {Array.from({ length: HOLE_COUNT }).map((_, i) => (
+      {Array.from({ length: count }).map((_, i) => (
         <span
           key={i}
           style={{
@@ -49,12 +49,25 @@ function SprocketRow() {
   );
 }
 
-export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }: Props) {
-  const frames = [...CARDS, ...CARDS];
+/** Spread extra cards evenly across the base deck so they appear quickly */
+function interleave(base: Card[], extras: Card[]): Card[] {
+  if (extras.length === 0) return base;
+  const result = [...base];
+  extras.forEach((card, i) => {
+    const pos = Math.round((i + 1) * result.length / (extras.length + 1));
+    result.splice(pos, 0, card);
+  });
+  return result;
+}
+
+export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false, extraCards = [] }: Props) {
+  const allCards = interleave([...CARDS], extraCards);
+  const halfWidth = allCards.length * FRAME_W;
+  const holeCount = Math.ceil((halfWidth * 2) / 24) + 10;
+  const frames = [...allCards, ...allCards];
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  // Reversed strip starts halfway through so the two strips look staggered
-  const offsetRef = useRef(reversed ? HALF_WIDTH / 2 : 0);
+  const offsetRef = useRef(reversed ? halfWidth / 2 : 0);
   const isOpenRef = useRef(isOpen);
   const isDraggingRef = useRef(false);
   const isPointerDownRef = useRef(false);
@@ -65,29 +78,34 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
   const velocityRef = useRef(0);
   const lastPointerXRef = useRef(0);
   const lastPointerTimeRef = useRef(0);
+  // Keep latest halfWidth in a ref so the RAF loop always sees current value
+  const halfWidthRef = useRef(halfWidth);
+  halfWidthRef.current = halfWidth;
 
   useEffect(() => {
     isOpenRef.current = isOpen;
   }, [isOpen]);
 
   useEffect(() => {
+    const scrollSpeed = () => halfWidthRef.current / 350;
     const tick = (time: number) => {
+      const hw = halfWidthRef.current;
       const elapsed = lastTimeRef.current > 0 ? (time - lastTimeRef.current) / 1000 : 0;
       lastTimeRef.current = time;
 
       if (!isDraggingRef.current && elapsed < 0.1) {
         // Apply momentum inertia
         if (Math.abs(velocityRef.current) > 0.5) {
-          offsetRef.current = ((offsetRef.current + velocityRef.current * elapsed) % HALF_WIDTH + HALF_WIDTH) % HALF_WIDTH;
+          offsetRef.current = ((offsetRef.current + velocityRef.current * elapsed) % hw + hw) % hw;
           velocityRef.current *= 0.88;
         } else if (!isOpenRef.current) {
           // Auto-scroll when no card is open and momentum settled
           velocityRef.current = 0;
-          const delta = SCROLL_SPEED * elapsed;
+          const delta = scrollSpeed() * elapsed;
           if (reversed) {
-            offsetRef.current = ((offsetRef.current - delta) % HALF_WIDTH + HALF_WIDTH) % HALF_WIDTH;
+            offsetRef.current = ((offsetRef.current - delta) % hw + hw) % hw;
           } else {
-            offsetRef.current = (offsetRef.current + delta) % HALF_WIDTH;
+            offsetRef.current = (offsetRef.current + delta) % hw;
           }
         }
       }
@@ -129,7 +147,8 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
     }
     lastPointerXRef.current = e.clientX;
     lastPointerTimeRef.current = now;
-    offsetRef.current = ((dragStartOffsetRef.current + delta) % HALF_WIDTH + HALF_WIDTH) % HALF_WIDTH;
+    const hw = halfWidthRef.current;
+    offsetRef.current = ((dragStartOffsetRef.current + delta) % hw + hw) % hw;
   };
 
   const handlePointerUp = () => {
@@ -187,9 +206,9 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
           
         }}
       >
-        <SprocketRow />
+        <SprocketRow count={holeCount} />
 
-        <div style={{ display: 'flex', flexDirection: 'row', flex: 1, gap: "15px" }}>
+        <div style={{ display: 'flex', flexDirection: 'row', flex: 1, gap: "0" }}>
           {frames.map((card, i) => (
             <FilmFrame
               key={`${card.id}-${i}`}
@@ -201,7 +220,7 @@ export function FilmStrip({ isOpen, selectedCardId, onSelect, reversed = false }
           ))}
         </div>
 
-        <SprocketRow />
+        <SprocketRow count={holeCount} />
       </div>
     </div>
   );

@@ -6,17 +6,18 @@ interface Props {
 }
 
 export function CategoryPill({ category }: Props) {
-  const { solid, tint } = CATEGORY_COLORS[category];
+  const { solid } = CATEGORY_COLORS[category];
   return (
     <span
       style={{
         display: 'inline-block',
-        padding: '3px 4px',
+        padding: '3px 0px',
         borderRadius: '4px',
-        background: tint,
+        background: 'transparent',
+        border: `1px solid ${solid}55`,
         width: 'fit-content',
         color: solid,
-        fontFamily: "'DM Mono', monospace",
+        fontFamily: "'Nunito Sans', sans-serif",
         fontSize: '12px',
         fontWeight: 400,
         letterSpacing: '0.08em',
