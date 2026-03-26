@@ -14,7 +14,7 @@ interface Props {
 }
 
 const SPROCKET_H = 30;
-const STRIP_H = FRAME_HEIGHT + SPROCKET_H * 2; // 170 + 32 = 202px
+const STRIP_H = FRAME_HEIGHT + SPROCKET_H * 2 + 4; // +4 compensates for 2px top+bottom borders (border-box)
 
 export const HALF_WIDTH = CARDS.length * FRAME_W; // loop wrap point (used externally)
 

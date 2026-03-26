@@ -278,18 +278,32 @@ export default function App() {
                     textTransform: "uppercase",
                     color: "rgba(245,233,218,0.85)",
                     textAlign: "right",
-                    transition: "color 0.2s ease, background 0.2s ease",
+                    transition: "color 0.2s ease, text-shadow 0.2s ease, transform 0.3s ease",
                     animation: `menuItemIn 0.2s ease ${item.delay} forwards`,
                     opacity: 0,
                     whiteSpace: "nowrap",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "rgba(245,233,218,1)";
-                    e.currentTarget.style.background = "rgba(197, 136, 72, 0.95)";
+                    e.currentTarget.style.color = "rgba(255,248,230,1)";
+                    e.currentTarget.style.textShadow = "0 0 12px rgba(201,169,110,0.55), 0 0 28px rgba(201,169,110,0.25)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = "rgba(245,233,218,0.85)";
-                    e.currentTarget.style.background = "rgba(22, 14, 6, 0)";
+                    e.currentTarget.style.textShadow = "none";
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.transition = "color 0.2s ease, text-shadow 0.2s ease, transform 0.3s ease";
+                  }}
+                  onPointerDown={(e) => {
+                    e.currentTarget.style.transform = "scale(0.95)";
+                    e.currentTarget.style.transition = "transform 0.08s ease, color 0.2s ease, text-shadow 0.2s ease";
+                  }}
+                  onPointerUp={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.transition = "transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease, text-shadow 0.2s ease";
+                  }}
+                  onPointerCancel={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.transition = "transform 0.3s ease";
                   }}
                 >
                   {item.label}

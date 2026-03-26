@@ -95,6 +95,20 @@ export function SuggestTopic({ onTopicSubmit }: Props) {
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.boxShadow = "0px 0px 0px 1px rgba(201,169,110,0.14), 0 -5px 14px -4px rgba(201,169,110,0.2), 0 5px 12px -4px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05)";
+          e.currentTarget.style.transform = "translateX(-50%) scale(1)";
+          e.currentTarget.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+        }}
+        onPointerDown={(e) => {
+          e.currentTarget.style.transform = "translateX(-50%) scale(0.95)";
+          e.currentTarget.style.transition = "transform 0.08s ease, box-shadow 0.3s ease";
+        }}
+        onPointerUp={(e) => {
+          e.currentTarget.style.transform = "translateX(-50%) scale(1)";
+          e.currentTarget.style.transition = "transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease";
+        }}
+        onPointerCancel={(e) => {
+          e.currentTarget.style.transform = "translateX(-50%) scale(1)";
+          e.currentTarget.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
         }}
       >
         Suggest a topic

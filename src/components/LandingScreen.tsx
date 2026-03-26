@@ -248,6 +248,21 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow =
               "0px 0px 0px 1px rgba(201,169,110,0.16), 0 -8px 20px -4px rgba(201,169,110,0.28), 0 8px 18px -4px rgba(220,200,170,0.06), 0 0 40px rgba(196,133,106,0.09), inset 0 1px 0 rgba(255,255,255,0.06)";
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.transition = "transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease";
+          }}
+          onPointerDown={(e) => {
+            if (!imagesReady) return;
+            e.currentTarget.style.transform = "scale(0.95)";
+            e.currentTarget.style.transition = "transform 0.08s ease, box-shadow 0.3s ease, color 0.3s ease";
+          }}
+          onPointerUp={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.transition = "transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, color 0.3s ease";
+          }}
+          onPointerCancel={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.transition = "transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease";
           }}
         >
           {imagesReady ? (
