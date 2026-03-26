@@ -40,7 +40,6 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
         style={{
           position: "relative",
           width: "min(560px, 100vw)",
-          maxHeight: "min(100dvh, 800px)",
           background: "rgba(28, 18, 8, 0.8)",
           backdropFilter: "blur(60px)",
           WebkitBackdropFilter: "blur(60px)",
@@ -49,9 +48,6 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
           borderTop: "none",
           boxShadow: "0 20px 80px rgba(0,0,0,0.5)",
           padding: "28px 36px 52px",
-          overflowY: "auto",
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          WebkitOverflowScrolling: "touch" as any,
           
         }}
       >
@@ -134,7 +130,7 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
             boxShadow:
               "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.42), 0 8px 20px -4px rgba(220,200,170,0.08), 0 0 50px rgba(196,133,106,0.14), inset 0 1px 0 rgba(255,255,255,0.06)",
             transition: "box-shadow 0.3s ease",
-            marginBottom: '10px'
+            
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow =
