@@ -157,18 +157,16 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
         transition: 'opacity 0.5s ease',
       }}
     >
-      {/* Dark overlay on top of photo backdrop for readability */}
-      {imgSrc && (
-        <div
-          aria-hidden="true"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(10,6,2,0.4)',
-            pointerEvents: 'none',
-          }}
-        />
-      )}
+      {/* Dark overlay — dims photo or brightgradient for text readability */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: imgSrc ? 'rgba(10,6,2,0.4)' : 'rgba(10,6,2,0.62)',
+          pointerEvents: 'none',
+        }}
+      />
 
       <div style={cardStyle}>
         {/* Noise texture */}

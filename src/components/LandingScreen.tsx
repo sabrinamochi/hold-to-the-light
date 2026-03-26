@@ -195,12 +195,13 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
         <p
           style={{
             fontFamily: "'EB Garamond', serif",
-            fontSize: "clamp(16px, 2vw, 20px)",
+            fontSize: "clamp(18px, 4vw, 22px)",
             fontWeight: 400,
             color: "rgba(249, 243, 235, 0.96)",
             lineHeight: 1.5,
-            maxWidth: "46ch",
+            maxWidth: "48ch",
             marginBottom: "40px",
+            textWrap: 'balance'
           }}
         >
           She rode the bus with me to school every morning and taught me
@@ -225,7 +226,7 @@ export function LandingScreen({ onEnter, imagesReady = false }: Props) {
             borderRadius: "100px",
             padding: "clamp(12px, 2vw, 16px) clamp(36px, 6vw, 52px)",
             fontFamily: "'Nunito Sans', sans-serif",
-            fontSize: "clamp(13px, 1.4vw, 16px)",
+            fontSize: "clamp(14px, 1.4vw, 16px)",
             fontWeight: 600,
             letterSpacing: "0.12em",
             textTransform: "uppercase",

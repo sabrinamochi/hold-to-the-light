@@ -284,12 +284,12 @@ export default function App() {
                     whiteSpace: "nowrap",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "rgba(245,233,218,0.1)";
-                    e.currentTarget.style.background = "rgba(35, 22, 8, 0.95)";
+                    e.currentTarget.style.color = "rgba(245,233,218,1)";
+                    e.currentTarget.style.background = "rgba(197, 136, 72, 0.95)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = "rgba(245,233,218,0.85)";
-                    e.currentTarget.style.background = "rgba(22, 14, 6, 0.85)";
+                    e.currentTarget.style.background = "rgba(22, 14, 6, 0)";
                   }}
                 >
                   {item.label}
