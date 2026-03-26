@@ -218,10 +218,10 @@ export function CardOverlay({ card, imgSrc, onNext, onDismiss }: Props) {
           <p
             style={{
               fontFamily: "'EB Garamond', serif",
-              fontStyle: 'italic',
+              // fontStyle: 'italic',
               fontWeight: 400,
               fontSize: 'clamp(20px, 2.8vw, 26px)',
-              lineHeight: 1.5,
+              lineHeight: 1.3,
               color: 'rgba(240,232,220,0.92)',
               flex: 1,
               paddingBottom: '20px'
