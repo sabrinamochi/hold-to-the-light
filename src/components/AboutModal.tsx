@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 
 interface Props {
   onClose: () => void;
-  type?: 'project' | 'me';
+  type?: "project" | "me";
 }
 
-export function AboutModal({ onClose, type = 'project' }: Props) {
+export function AboutModal({ onClose, type = "project" }: Props) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
+        overflowY: "auto",
         background: "rgba(8,5,2,0.75)",
         backdropFilter: "blur(32px)",
         WebkitBackdropFilter: "blur(32px)",
@@ -48,7 +49,6 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
           borderTop: "none",
           boxShadow: "0 20px 80px rgba(0,0,0,0.5)",
           padding: "28px 36px 52px",
-          
         }}
       >
         {/* Grain */}
@@ -66,49 +66,75 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
           }}
         />
 
-        {type === 'project' ? (
+        {type === "project" ? (
           <>
             {/* Eyebrow */}
-            <p style={{ fontFamily: "'Nunito Sans', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(201,169,110,0.6)", marginBottom: "14px" }}>
+            <p
+              style={{
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "rgba(201,169,110,0.6)",
+                marginBottom: "14px",
+              }}
+            >
               about the project
             </p>
-            <h2 style={{ fontFamily: "'EB Garamond', serif", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(28px, 5vw, 38px)", color: "rgba(255,248,238,0.96)", lineHeight: 1.1, margin: "0 0 28px" }}>
+            <h2
+              style={{
+                fontFamily: "'EB Garamond', serif",
+                fontStyle: "italic",
+                fontWeight: 400,
+                fontSize: "clamp(28px, 5vw, 38px)",
+                color: "rgba(255,248,238,0.96)",
+                lineHeight: 1.1,
+                margin: "0 0 28px",
+              }}
+            >
               What to say to you
             </h2>
-            <div style={{ width: "40px", height: "1px", background: "rgba(201,169,110,0.3)", marginBottom: "28px" }} />
-            <div style={{ display: "flex", flexDirection: "column", gap: "18px", marginBottom: "40px" }}>
+            <div
+              style={{
+                width: "40px",
+                height: "1px",
+                background: "rgba(201,169,110,0.3)",
+                marginBottom: "28px",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "18px",
+                marginBottom: "40px",
+              }}
+            >
               {[
-                "This is a card-drawing app I made for myself. A page to open before each weekly call with my grandma, to remind me there's always something to talk about. We just have to look for it in her past, in shared memories, in the things she still loves.",
-                "The questions here were gathered from Alzheimer's Association forums, caregiver communities, and my own specific memories with her. Each one is a small door. Some weeks one of them opens into a whole conversation.",
-                "If you're here, you probably have someone too. These cards are for you as well. If you have a question worth asking a grandparent, share it — it might help someone else find the words too.",
+                "This is a card-drawing app I made for myself. A page to open before each weekly call with my grandma, who has dementia. She still knows my voice, still recognizes me. For a long time, I told myself that meant we could work on it. That there was still a way to help her recover.",
+                "What I didn't understand is that dementia doesn't happen overnight. It happens gradually. She talks less. She stopped seeing her friends. The person I knew is still there, but she is also slowly someone different. The conversation on our weekly calls started fading. I kept running out of things to say.",
+                "So I built this as a conversation opener for our weekly calls. Each card is a question inspired by Alzheimer's Association research, caregiver communities, and my own memories with her.",
+                "If you're here, you probably have someone too. These cards are for you as well. If you have a question worth asking a grandparent, share it. It might help someone else find the words too."
               ].map((text, i) => (
-                <p key={i} style={{ fontFamily: "'EB Garamond', serif", fontSize: "clamp(17px, 2.2vw, 20px)", fontWeight: 400, color: "rgba(245,233,218,0.82)", lineHeight: 1.75, margin: 0 }}>
+                <p
+                  key={i}
+                  style={{
+                    fontFamily: "'EB Garamond', serif",
+                    fontSize: "clamp(17px, 2.2vw, 20px)",
+                    fontWeight: 400,
+                    color: "rgba(245,233,218,0.82)",
+                    lineHeight: 1.75,
+                    margin: 0,
+                  }}
+                >
                   {text}
                 </p>
               ))}
             </div>
           </>
         ) : (
-          <>
-            {/* Eyebrow */}
-            <p style={{ fontFamily: "'Nunito Sans', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(201,169,110,0.6)", marginBottom: "14px" }}>
-              about me
-            </p>
-            <h2 style={{ fontFamily: "'EB Garamond', serif", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(28px, 5vw, 38px)", color: "rgba(255,248,238,0.96)", lineHeight: 1.1, margin: "0 0 28px" }}>
-              Chen S.
-            </h2>
-            <div style={{ width: "40px", height: "1px", background: "rgba(201,169,110,0.3)", marginBottom: "28px" }} />
-            <div style={{ display: "flex", flexDirection: "column", gap: "18px", marginBottom: "40px" }}>
-              {[
-                "I'm a designer and builder based in the US. I made this for Sunday calls with my grandmother in Taiwan, who taught me how to do long division, bargain at markets, and knit a scarf from scratch.",
-                "She has dementia now. The calls are shorter and the silences are longer. I built this so the silences feel less like endings and more like space — room for a story to walk in.",
-              ].map((text, i) => (
-                <p key={i} style={{ fontFamily: "'EB Garamond', serif", fontSize: "clamp(17px, 2.2vw, 20px)", fontWeight: 400, color: "rgba(245,233,218,0.82)", lineHeight: 1.75, margin: 0 }}>
-                  {text}
-                </p>
-              ))}
-            </div>
-          </>
+          <></>
         )}
 
         {/* Close button */}
@@ -130,7 +156,6 @@ export function AboutModal({ onClose, type = 'project' }: Props) {
             boxShadow:
               "0 0 0 1px rgba(201,169,110,0.1), 0 -8px 24px -4px rgba(201,169,110,0.42), 0 8px 20px -4px rgba(220,200,170,0.08), 0 0 50px rgba(196,133,106,0.14), inset 0 1px 0 rgba(255,255,255,0.06)",
             transition: "box-shadow 0.3s ease",
-            
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow =
