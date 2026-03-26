@@ -122,10 +122,10 @@ export function AboutModal({ onClose, type = "project" }: Props) {
                   key={i}
                   style={{
                     fontFamily: "'EB Garamond', serif",
-                    fontSize: "clamp(17px, 2.2vw, 20px)",
+                    fontSize: "clamp(20px, 2.6vw, 22px)",
                     fontWeight: 400,
                     color: "rgba(245,233,218,0.82)",
-                    lineHeight: 1.75,
+                    lineHeight: 1.5,
                     margin: 0,
                   }}
                 >
